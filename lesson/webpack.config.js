@@ -1,9 +1,18 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
 	mode: "development",
+	devtool: 'cheap-module-eval-source-map', // 线上mode:production时，建议使用'cheap-module-source-map'
+	devServer: {
+		contentBase: './dist',
+		open: true
+	},
+    // entry: './src/index.js',
     entry: {
-    	main: './src/index.js'
+    	main: './src/index.js',
+    	// sub: './src/index.js'
     },
     module: {
     	rules: [
@@ -19,35 +28,47 @@ module.exports = {
     				}
     			}]
     		},
+    		{
+    			test: /\.(eot|ttf|svg|woff)$/,
+    			use: {
+    				loader: 'file-loader'
+    			}
+    		},
 	        {
 	        	test: /\.scss$/,
 	            use: [
 	                "style-loader", // 将 JS 字符串生成为 style 节点
-	                "css-loader",
-	                // {
-	                // 	loader: 'css-loader', // 将 CSS 转化成 CommonJS 模块
-	                // 	options: {
-	                // 		// importLoaders: 2, // 在 css-loader 前应用的 loader 的数量，即保证会走到post-loader和sass-loader，而不是直接走css-loader
-	                // 		// modules: true // 开启css模块化打包
-	                // 	}
-	                // }, 
+	                {
+	                	loader: 'css-loader', // 将 CSS 转化成 CommonJS 模块
+	                	options: {
+	                		importLoaders: 2, // 在 css-loader 前应用的 loader 的数量，即保证会走到post-loader和sass-loader，而不是直接走css-loader
+	                		// modules: true // 开启css模块化打包
+	                	}
+	                }, 
 	                "sass-loader", // 将 Sass 编译成 CSS，默认使用 Node Sass
-	                "postcss-loader"
-	       //          {
-				    // 	loader: 'postcss-loader', // 需要配置autoprefixer插件
-				    //   	options: {
-				    //     	ident: 'postcss',
-					   //      plugins: [
-					   //        	require('autoprefixer')
-					   //      ]
-	      	// 			}
-    				// } 
+	                // "postcss-loader"
+	                {
+				    	loader: 'postcss-loader', // 需要配置autoprefixer插件
+				      	options: {
+				        	ident: 'postcss',
+					        plugins: [
+					          	require('autoprefixer')
+					        ]
+	      				}
+    				} 
 	            ]
 	        }
     	]
     },
+    plugins: [
+	    new HtmlWebpackPlugin({
+	    	template: 'src/index.html'
+	    }), new CleanWebpackPlugin()
+    ],
     output: {
-        filename: 'bundle.js',
+        // publicPath: 'http:cdn.home.cn',
+        filename: '[name].js',
         path: path.resolve(__dirname, 'dist')
-    }
+    },
+    
 }
