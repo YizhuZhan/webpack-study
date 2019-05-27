@@ -24,4 +24,40 @@
 
 
 // 3. test devServer
-console.log('little sql is 7 months ^ ^')
+// console.log('little sql is 7 months ^ ^')
+
+// 4. test HMR - css
+// import './style.css'
+
+// var btn = document.createElement('button');
+// btn.innerHTML = '新增';
+// document.body.appendChild(btn);
+
+// btn.onclick = function() {
+// 	var div = document.createElement('div');
+// 	div.innerHTML = 'item';
+// 	document.body.appendChild(div);
+// }
+
+// test HMR - js
+// import counter from './count.js';
+// import number from './number.js';
+
+// counter();
+// number();
+
+// if(module.hot) {
+// 	module.hot.accept('./number', function() {
+// 		document.body.removeChild(document.getElementById('number'));
+// 		number();
+// 	});
+// }
+
+
+// 5. test babel
+const arr = [
+	new Promise(() => {}),
+	new Promise(() => {})
+];
+
+arr.map(item => console.log(item));

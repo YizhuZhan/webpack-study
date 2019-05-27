@@ -8,7 +8,9 @@ module.exports = {
 	devServer: {
 		contentBase: './dist',
 		open: true,
-		port: 8090, // 默认8080
+		hot: true, // 开启HMR功能
+		hotOnly: true, // 即便HMR没有生效，也不让浏览器自动刷新
+		// port: 8090, // 默认8080
 	},
     // entry: './src/index.js',
     entry: {
@@ -48,6 +50,28 @@ module.exports = {
 	                }, 
 	                "sass-loader", // 将 Sass 编译成 CSS，默认使用 Node Sass
 	                // "postcss-loader"
+	                {
+				    	loader: 'postcss-loader', // 需要配置autoprefixer插件
+				      	options: {
+				        	ident: 'postcss',
+					        plugins: [
+					          	require('autoprefixer')
+					        ]
+	      				}
+    				} 
+	            ]
+	        },
+	        {
+	        	test: /\.css$/,
+	            use: [
+	                "style-loader", // 将 JS 字符串生成为 style 节点
+	                {
+	                	loader: 'css-loader', // 将 CSS 转化成 CommonJS 模块
+	                	options: {
+	                		importLoaders: 2, // 在 css-loader 前应用的 loader 的数量，即保证会走到post-loader和sass-loader，而不是直接走css-loader
+	                		// modules: true // 开启css模块化打包
+	                	}
+	                }, 
 	                {
 				    	loader: 'postcss-loader', // 需要配置autoprefixer插件
 				      	options: {
