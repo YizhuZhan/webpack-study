@@ -7,7 +7,8 @@ module.exports = {
 	devtool: 'cheap-module-eval-source-map', // 线上mode:production时，建议使用'cheap-module-source-map'
 	devServer: {
 		contentBase: './dist',
-		open: true
+		open: true,
+		port: 8090, // 默认8080
 	},
     // entry: './src/index.js',
     entry: {
@@ -67,6 +68,7 @@ module.exports = {
     ],
     output: {
         // publicPath: 'http:cdn.home.cn',
+        publicPath: '/', // 表示所有打包生成的文件前都加一个根路径，确保打包生成的文件路径上不会有问题（不加也可以）
         filename: '[name].js',
         path: path.resolve(__dirname, 'dist')
     },
