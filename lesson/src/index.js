@@ -55,9 +55,22 @@
 
 
 // 5. test babel
+import "@babel/polyfill";
 const arr = [
-	new Promise(() => {}),
-	new Promise(() => {})
+	111,222,3
 ];
 
+
 arr.map(item => console.log(item));
+
+// if(module.hot) {
+// 	module.hot.accept('./index.js', function() {
+// 		console.log("here")
+// 		const arr = [
+// 			111,222,444
+// 		];
+
+
+// 		arr.map(item => console.log(item));
+// 	})
+// }
