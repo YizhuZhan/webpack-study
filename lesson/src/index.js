@@ -55,7 +55,13 @@
 
 
 // 5. test babel
+import "@babel/polyfill";
+
+// import "core-js/stable";
+// import "regenerator-runtime/runtime";
+
 const arr = [
+// 111,222,333
 	new Promise(() => {}),
 	new Promise(() => {})
 ];

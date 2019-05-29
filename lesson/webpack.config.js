@@ -1,14 +1,15 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+// const webpack = require('webpack');
 
 module.exports = {
 	mode: "development",
 	devtool: 'cheap-module-eval-source-map', // 线上mode:production时，建议使用'cheap-module-source-map'
 	devServer: {
-		contentBase: './dist',
-		open: true,
-		hot: true, // 开启HMR功能
+		contentBase: './dist', // 在dist目录下启动服务器
+		open: true, // 自动打开浏览器
+		hot: true, // 开启HMR功能（热模块更新）
 		hotOnly: true, // 即便HMR没有生效，也不让浏览器自动刷新
 		// port: 8090, // 默认8080
 	},
@@ -19,6 +20,40 @@ module.exports = {
     },
     module: {
     	rules: [
+    		{ 
+	        	test: /\.js$/, 
+	        	exclude: /node_modules/, // 如果检测到代码在node_module中，就不使用babel-loader，没有必要对第三方代码转成es5（第三方已转好）
+	        	loader: "babel-loader",
+	    //     	options: {
+	    //     		"presets": [ // 开发业务代码时，只需要配置presets即可
+					//     [
+					//     	"@babel/preset-env",
+					//     	{
+					//     		"useBuiltIns": "usage",// 用了什么就把什么打包到main.js里面
+					//     		// "corejs": 3,
+					//     		targets: {
+					// 		    	// edge: "17",
+					// 		    	// firefox: "60",
+					// 		    	chrome: "67",
+					// 		    	// safari: "11.1"
+					// 		    }
+					//     	}
+					//     ]
+					// ]
+
+					// // "plugins": [ // 开发库项目，使用plugin配置，不需要presets
+					// //     [
+					// // 	    "@babel/plugin-transform-runtime",
+					// // 	    {
+					// // 	        "corejs": 2,
+					// // 	        "helpers": true,
+					// // 	        "regenerator": true,
+					// // 			"useESModules": false
+					// // 	   }
+					// //    ]
+					// // ]
+	    //     	}
+	        },
     		{
     			test: /\.(jpg|png|gif)$/,
     			use: [{
@@ -88,7 +123,8 @@ module.exports = {
     plugins: [
 	    new HtmlWebpackPlugin({
 	    	template: 'src/index.html'
-	    }), new CleanWebpackPlugin()
+	    }), new CleanWebpackPlugin(),
+	    // new webpack.HotModuleReplacementPlugin()
     ],
     output: {
         // publicPath: 'http:cdn.home.cn',

@@ -1,0 +1,17 @@
+{
+	"presets": [ // 开发业务代码时，只需要配置presets即可
+	    [
+	    	"@babel/preset-env",
+	    	{
+	    		"useBuiltIns": "usage",// 用了什么就把什么打包到main.js里面
+	    		// "corejs": 3,
+	    		targets: {
+			    	// edge: "17",
+			    	// firefox: "60",
+			    	chrome: "67",
+			    	// safari: "11.1"
+			    }
+	    	}
+	    ]
+	]
+}
